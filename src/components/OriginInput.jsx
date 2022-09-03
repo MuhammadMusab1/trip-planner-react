@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getPlacesWithThisName } from "../services/mapboxAPI";
 const OriginInput = () => {
   const [inputValue, setInputValue] = useState("");
+  // useEffect(() => {
+  //   getPlacesWithThisName(inputValue);
+  // }, [inputValue]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getPlacesWithThisName(inputValue);
+  };
   return (
-    <form className="origin-form">
+    <form className="origin-form" onSubmit={handleSubmit}>
       <input
         placeholder="Find a starting location"
         type="text"
