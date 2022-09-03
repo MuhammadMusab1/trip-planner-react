@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { getPlacesWithThisName } from "../services/mapboxAPI";
-const OriginInput = () => {
+const OriginInput = ({ setOriginPlaces }) => {
   const [inputValue, setInputValue] = useState("");
-  // useEffect(() => {
-  //   getPlacesWithThisName(inputValue);
-  // }, [inputValue]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    getPlacesWithThisName(inputValue);
+    getPlacesWithThisName(inputValue).then((places) => {
+      setOriginPlaces(places);
+    });
   };
   return (
     <form className="origin-form" onSubmit={handleSubmit}>
