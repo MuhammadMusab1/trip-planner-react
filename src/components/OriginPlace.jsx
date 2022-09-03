@@ -1,8 +1,8 @@
-const OriginPlace = ({ lat, long, name }) => {
+const OriginPlace = ({ lat, long, name, locality }) => {
   return (
     <li data-long={long} data-lat={lat} className="">
       <div className="name">{name}</div>
-      <div>Winnipeg</div>
+      <div>{locality}</div>
     </li>
   );
 };

@@ -21,6 +21,7 @@ function App() {
                   long={place.geometry.coordinates[0]}
                   lat={place.geometry.coordinates[0]}
                   name={place.text}
+                  locality={place.context[2].text}
                 />
               );
             })}
