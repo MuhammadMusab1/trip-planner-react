@@ -2,21 +2,22 @@ import "./App.css";
 
 import { useState } from "react";
 
-import OriginInput from "./components/OriginInput";
-import OriginList from "./components/OriginList";
-import OriginPlace from "./components/OriginPlace";
+import SearchInput from "./components/SearchInput";
+import PlacesList from "./components/PlacesList";
+import Place from "./components/Place";
 
 function App() {
   const [originPlaces, setOriginPlaces] = useState(null);
+  const [destinationPlaces, setDestinationPlaces] = useState(null);
   return (
     <div className="grid-wrapper">
       <div className="origin-container">
-        <OriginInput setOriginPlaces={setOriginPlaces} />
-        <OriginList>
+        <SearchInput setPlaces={setOriginPlaces} />
+        <PlacesList>
           {originPlaces &&
             originPlaces.map((place) => {
               return (
-                <OriginPlace
+                <Place
                   key={place.id}
                   long={place.geometry.coordinates[0]}
                   lat={place.geometry.coordinates[0]}
@@ -25,27 +26,24 @@ function App() {
                 />
               );
             })}
-        </OriginList>
+        </PlacesList>
       </div>
       <div className="destination-container">
-        <form className="destination-form">
-          <input placeholder="Choose your Destination" type="text" />
-        </form>
-
-        <ul className="destinations">
-          <li
-            data-long="-97.1500642"
-            data-lat="49.7959303"
-            className="selected"
-          >
-            <div className="name">Allegheny Drive</div>
-            <div>Winnipeg</div>
-          </li>
-          <li data-long="-97.1500642" data-lat="49.7959303" className="">
-            <div className="name">Allegheny Drive</div>
-            <div>Winnipeg</div>
-          </li>
-        </ul>
+        <SearchInput setPlaces={setDestinationPlaces} />
+        <PlacesList>
+          {destinationPlaces &&
+            destinationPlaces.map((place) => {
+              return (
+                <Place
+                  key={place.id}
+                  long={place.geometry.coordinates[0]}
+                  lat={place.geometry.coordinates[1]}
+                  name={place.text}
+                  locality={place.context[2].text}
+                />
+              );
+            })}
+        </PlacesList>
       </div>
       <div className="button-container">
         <button className="plan-trip">Plan My Trip</button>
