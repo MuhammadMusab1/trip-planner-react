@@ -19,21 +19,18 @@ ul {
   padding: 0;
 }
 
-.origins > li,
-.destinations > li {
+.places-list > li {
   padding: 20px 20px;
   border: 1px solid #d3d3d3;
   margin: 5px 0;
 }
 
-.origins > li:hover,
-.destinations > li:hover {
+.places-list > li:hover {
   background-color: #efefef;
   cursor: pointer;
 }
 
-.origins > li.selected,
-.destinations > li.selected {
+.places-list > li.selected {
   background-color: #f2f3ff;
 }
 
