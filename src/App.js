@@ -1,19 +1,30 @@
 import "./App.css";
 
+import { useState } from "react";
+
 import OriginInput from "./components/OriginInput";
+import OriginList from "./components/OriginList";
+import OriginPlace from "./components/OriginPlace";
 
 function App() {
+  const [originPlaces, setOriginPlaces] = useState(null);
   return (
     <div className="grid-wrapper">
       <div className="origin-container">
-        <OriginInput />
-
-        <ul className="origins">
-          <li data-long="-97.1500642" data-lat="49.7959303" className="">
-            <div className="name">Allegheny Drive</div>
-            <div>Winnipeg</div>
-          </li>
-        </ul>
+        <OriginInput setOriginPlaces={setOriginPlaces} />
+        <OriginList>
+          {originPlaces &&
+            originPlaces.map((place) => {
+              return (
+                <OriginPlace
+                  key={place.id}
+                  long={place.geometry.coordinates[0]}
+                  lat={place.geometry.coordinates[0]}
+                  name={place.text}
+                />
+              );
+            })}
+        </OriginList>
       </div>
       <div className="destination-container">
         <form className="destination-form">
