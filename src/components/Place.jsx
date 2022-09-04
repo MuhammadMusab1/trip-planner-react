@@ -23,7 +23,7 @@ const Place = ({ lat, long, name, locality, type }) => {
     <li
       data-long={long}
       data-lat={lat}
-      className=""
+      className={`${type}`}
       onClick={handleClickOnPlace}
     >
       <div className="name">{name}</div>

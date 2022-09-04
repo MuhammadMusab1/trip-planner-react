@@ -5,6 +5,7 @@ import { useState } from "react";
 import SearchInput from "./components/SearchInput";
 import PlacesList from "./components/PlacesList";
 import Place from "./components/Place";
+import TripButton from "./components/TripButton";
 
 function App() {
   const [originPlaces, setOriginPlaces] = useState(null);
@@ -20,7 +21,7 @@ function App() {
                 <Place
                   key={place.id}
                   long={place.geometry.coordinates[0]}
-                  lat={place.geometry.coordinates[0]}
+                  lat={place.geometry.coordinates[1]}
                   name={place.text}
                   locality={place.context[2].text}
                   type={"origin-place"}
@@ -47,9 +48,7 @@ function App() {
             })}
         </PlacesList>
       </div>
-      <div className="button-container">
-        <button className="plan-trip">Plan My Trip</button>
-      </div>
+      <TripButton />
       <div className="bus-container">
         <div className="recommended">
           <ul className="my-trip"></ul>
