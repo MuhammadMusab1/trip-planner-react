@@ -1,4 +1,4 @@
-const PlacesList = ({ children }) => {
-  return <ul className="places-list">{children}</ul>;
+const PlacesList = ({ children, type }) => {
+  return <ul className={`places-list ${type}`}>{children}</ul>;
 };
 export default PlacesList;

@@ -13,7 +13,7 @@ function App() {
     <div className="grid-wrapper">
       <div className="origin-container">
         <SearchInput setPlaces={setOriginPlaces} />
-        <PlacesList>
+        <PlacesList type={"origin-list"}>
           {originPlaces &&
             originPlaces.map((place) => {
               return (
@@ -23,6 +23,7 @@ function App() {
                   lat={place.geometry.coordinates[0]}
                   name={place.text}
                   locality={place.context[2].text}
+                  type={"origin-place"}
                 />
               );
             })}
@@ -30,7 +31,7 @@ function App() {
       </div>
       <div className="destination-container">
         <SearchInput setPlaces={setDestinationPlaces} />
-        <PlacesList>
+        <PlacesList type={"destination-list"}>
           {destinationPlaces &&
             destinationPlaces.map((place) => {
               return (
@@ -40,6 +41,7 @@ function App() {
                   lat={place.geometry.coordinates[1]}
                   name={place.text}
                   locality={place.context[2].text}
+                  type={"destination-place"}
                 />
               );
             })}
