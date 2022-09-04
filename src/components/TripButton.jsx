@@ -1,3 +1,4 @@
+import { getAllTripsForRoute } from "../services/transitAPI";
 const TripButton = () => {
   const handlePlanTrip = () => {
     const tripPoints = {
@@ -23,6 +24,13 @@ const TripButton = () => {
       });
     //arrays[0] is origin and array[1] is destination
     console.log(tripPoints);
+    const { originCoords, destinationCoords } = tripPoints; //deconstructing syntax
+    getAllTripsForRoute(
+      originCoords.lat,
+      originCoords.long,
+      destinationCoords.lat,
+      destinationCoords.long
+    );
   };
   return (
     <div className="button-container" onClick={handlePlanTrip}>
