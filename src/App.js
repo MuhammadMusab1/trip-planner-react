@@ -11,7 +11,39 @@ import TripList from "./components/TripList";
 function App() {
   const [originPlaces, setOriginPlaces] = useState(null);
   const [destinationPlaces, setDestinationPlaces] = useState(null);
-  const [allTrips, setAllTrips] = useState(null);
+  const [recommendedRoute, setRecommendedRoute] = useState(null);
+  const [alternativeRoute, setAlternativeRoute] = useState(null);
+  const findTheFastestTrip = (tripsArray) => {
+    if (tripsArray) {
+      let lowestTimeTook = tripsArray[0].times.durations.total;
+      tripsArray.forEach((trip) => {
+        if (trip.times.durations.total < lowestTimeTook) {
+          lowestTimeTook = trip.times.durations.total;
+        }
+      });
+      console.log(lowestTimeTook + " lowest time took");
+      return lowestTimeTook;
+    }
+  };
+  const separateRecommendedAndAlternativeRoute = (allAvailableTrips) => {
+    const recommendedArray = [];
+    const alternativeArray = [];
+
+    if (allAvailableTrips) {
+      const lowestTimeTook = findTheFastestTrip(allAvailableTrips);
+      allAvailableTrips.forEach((trip) => {
+        if (trip.times.durations.total === lowestTimeTook) {
+          recommendedArray.push(trip);
+        } else {
+          alternativeArray.push(trip);
+        }
+      });
+      setRecommendedRoute(recommendedArray);
+      setAlternativeRoute(alternativeArray);
+    }
+  };
+  console.log(recommendedRoute);
+  console.log(alternativeRoute);
   return (
     <div className="grid-wrapper">
       <div className="origin-container">
@@ -50,7 +82,11 @@ function App() {
             })}
         </PlacesList>
       </div>
-      <TripButton setAllTrips={setAllTrips} />
+      <TripButton
+        separateRecommendedAndAlternativeRoute={
+          separateRecommendedAndAlternativeRoute
+        }
+      />
       <div className="bus-container">
         <TripList type={"Recommended"} />
         <TripList type={"Alternative"} />
