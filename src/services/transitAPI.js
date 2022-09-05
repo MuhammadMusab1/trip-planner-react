@@ -9,5 +9,5 @@ export const getAllTripsForRoute = async (
   );
   const response = await request.json();
   const allAvailableTrips = response.plans;
-  console.log(allAvailableTrips);
+  return allAvailableTrips;
 };

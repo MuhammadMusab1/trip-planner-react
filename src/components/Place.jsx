@@ -17,7 +17,6 @@ const Place = ({ lat, long, name, locality, type }) => {
   const handleClickOnPlace = (e) => {
     removeSelectedClass();
     e.target.closest("LI").classList.add("selected");
-    console.log(e.target.closest("LI"));
   };
   return (
     <li
