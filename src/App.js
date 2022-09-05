@@ -6,10 +6,12 @@ import SearchInput from "./components/SearchInput";
 import PlacesList from "./components/PlacesList";
 import Place from "./components/Place";
 import TripButton from "./components/TripButton";
+import TripList from "./components/TripList";
 
 function App() {
   const [originPlaces, setOriginPlaces] = useState(null);
   const [destinationPlaces, setDestinationPlaces] = useState(null);
+  const [allTrips, setAllTrips] = useState(null);
   return (
     <div className="grid-wrapper">
       <div className="origin-container">
@@ -48,15 +50,10 @@ function App() {
             })}
         </PlacesList>
       </div>
-      <TripButton />
+      <TripButton setAllTrips={setAllTrips} />
       <div className="bus-container">
-        <div className="recommended">
-          <ul className="my-trip"></ul>
-        </div>
-
-        <div className="alternative">
-          <ul className="alt-trip"></ul>
-        </div>
+        <TripList type={"Recommended"} />
+        <TripList type={"Alternative"} />
       </div>
     </div>
   );

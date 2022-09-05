@@ -1,5 +1,5 @@
 import { getAllTripsForRoute } from "../services/transitAPI";
-const TripButton = () => {
+const TripButton = ({ setAllTrips }) => {
   const handlePlanTrip = () => {
     const tripPoints = {
       originCoords: {
@@ -11,26 +11,23 @@ const TripButton = () => {
         lat: null,
       },
     };
-    const selectedPoints = document
-      .querySelectorAll(".selected")
-      .forEach((place) => {
-        if (place.classList.contains("origin-place")) {
-          tripPoints.originCoords.long = +place.dataset.long;
-          tripPoints.originCoords.lat = +place.dataset.lat;
-        } else {
-          tripPoints.destinationCoords.long = +place.dataset.long;
-          tripPoints.destinationCoords.lat = +place.dataset.lat;
-        }
-      });
+    document.querySelectorAll(".selected").forEach((place) => {
+      if (place.classList.contains("origin-place")) {
+        tripPoints.originCoords.long = +place.dataset.long;
+        tripPoints.originCoords.lat = +place.dataset.lat;
+      } else {
+        tripPoints.destinationCoords.long = +place.dataset.long;
+        tripPoints.destinationCoords.lat = +place.dataset.lat;
+      }
+    });
     //arrays[0] is origin and array[1] is destination
-    console.log(tripPoints);
     const { originCoords, destinationCoords } = tripPoints; //deconstructing syntax
     getAllTripsForRoute(
       originCoords.lat,
       originCoords.long,
       destinationCoords.lat,
       destinationCoords.long
-    );
+    ).then((allAvailableTrips) => setAllTrips(allAvailableTrips));
   };
   return (
     <div className="button-container" onClick={handlePlanTrip}>
