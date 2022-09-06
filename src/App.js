@@ -32,15 +32,67 @@ function App() {
     if (allAvailableTrips) {
       const lowestTimeTook = findTheFastestTrip(allAvailableTrips);
       allAvailableTrips.forEach((trip) => {
-        if (trip.times.durations.total === lowestTimeTook) {
-          recommendedArray.push(trip);
+        if (
+          trip.times.durations.total === lowestTimeTook &&
+          recommendedArray.length === 0
+        ) {
+          recommendedArray.push(createSimpleRouteObject(trip));
         } else {
-          alternativeArray.push(trip);
+          alternativeArray.push(createSimpleRouteObject(trip));
         }
       });
       setRecommendedRoute(recommendedArray);
       setAlternativeRoute(alternativeArray);
     }
+  };
+  const createSimpleRouteObject = (tripObject) => {
+    //an array of object
+    const { number, segments } = tripObject;
+    const simpleRouteObject = {
+      number: number,
+      segments: [],
+    };
+    segments.forEach((segment) => {
+      simpleRouteObject.segments.push({
+        type: segment.type,
+        instruction: makeInstructionAccordingToSegmentType(
+          segment.type,
+          segment
+        ),
+      });
+    });
+    return simpleRouteObject;
+  };
+  const makeInstructionAccordingToSegmentType = (
+    segmentType,
+    segmentObject
+  ) => {
+    const { times, to, route, from } = segmentObject;
+    let instruction = "";
+    switch (segmentType) {
+      case "walk":
+        if (to.destination) {
+          instruction = `Walk for ${times.durations.total} ${
+            times.durations.total > 1 ? "minutes" : "minute"
+          } to your destination`;
+        } else {
+          instruction = `Walk for ${times.durations.total} ${
+            times.durations.total > 1 ? "minutes" : "minute"
+          } to stop #${to.stop.key}-${to.stop.name}`;
+        }
+        break;
+      case "ride":
+        instruction = `Ride the ${route.name ? route.name : route.key} for ${
+          times.durations.total
+        } ${times.durations.total > 1 ? "minutes" : "minute"}.`;
+        break;
+      case "transfer":
+        instruction = `Transfer from stop #${from.stop.key} - ${from.stop.name} to stop #${to.stop.key}-${to.stop.name}.`;
+        break;
+      default:
+        instruction = `${segmentType} is instruction`;
+    }
+    return instruction;
   };
   console.log(recommendedRoute);
   console.log(alternativeRoute);
