@@ -9,6 +9,7 @@ import TripButton from "./components/TripButton";
 import TripList from "./components/TripList";
 import Trip from "./components/Trip";
 import Error from "./components/Error";
+import { Helmet } from "react-helmet";
 
 //BiErrorAlt
 
@@ -100,93 +101,100 @@ function App() {
     return instruction;
   };
   return (
-    <div className="grid-wrapper">
-      <div className="origin-container">
-        <SearchInput
-          setPlaces={setOriginPlaces}
-          placeholder={"Find a starting location"}
+    <>
+      {/* <Helmet>
+        <meta charSet="utf-8" />
+        <title>Trip Planner</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet> */}
+      <div className="grid-wrapper">
+        <div className="origin-container">
+          <SearchInput
+            setPlaces={setOriginPlaces}
+            placeholder={"Find a starting location"}
+          />
+          <PlacesList type={"origin-list"}>
+            {originPlaces &&
+              originPlaces.map((place) => {
+                return (
+                  <Place
+                    key={place.id}
+                    long={place.geometry.coordinates[0]}
+                    lat={place.geometry.coordinates[1]}
+                    name={place.text}
+                    locality={place.context[2].text}
+                    type={"origin-place"}
+                  />
+                );
+              })}
+          </PlacesList>
+        </div>
+        <div className="destination-container">
+          <SearchInput
+            setPlaces={setDestinationPlaces}
+            placeholder={"Choose your destination"}
+          />
+          <PlacesList type={"destination-list"}>
+            {destinationPlaces &&
+              destinationPlaces.map((place) => {
+                return (
+                  <Place
+                    key={place.id}
+                    long={place.geometry.coordinates[0]}
+                    lat={place.geometry.coordinates[1]}
+                    name={place.text}
+                    locality={place.context[2].text}
+                    type={"destination-place"}
+                  />
+                );
+              })}
+          </PlacesList>
+        </div>
+        <TripButton
+          separateRecommendedAndAlternativeRoute={
+            separateRecommendedAndAlternativeRoute
+          }
+          setError={setError}
+          setRecommendedRoute={setRecommendedRoute}
+          setAlternativeRoute={setAlternativeRoute}
         />
-        <PlacesList type={"origin-list"}>
-          {originPlaces &&
-            originPlaces.map((place) => {
+        <div className="bus-container">
+          {recommendedRoute &&
+            recommendedRoute.map((route) => {
               return (
-                <Place
-                  key={place.id}
-                  long={place.geometry.coordinates[0]}
-                  lat={place.geometry.coordinates[1]}
-                  name={place.text}
-                  locality={place.context[2].text}
-                  type={"origin-place"}
-                />
+                <TripList type={"Recommended"} key={route.number}>
+                  {route.segments.map((segment, index, array) => {
+                    return (
+                      <Trip
+                        instruction={segment.instruction}
+                        type={segment.type}
+                        key={index}
+                      />
+                    );
+                  })}
+                </TripList>
               );
             })}
-        </PlacesList>
-      </div>
-      <div className="destination-container">
-        <SearchInput
-          setPlaces={setDestinationPlaces}
-          placeholder={"Choose your destination"}
-        />
-        <PlacesList type={"destination-list"}>
-          {destinationPlaces &&
-            destinationPlaces.map((place) => {
+          {alternativeRoute &&
+            alternativeRoute.map((route) => {
               return (
-                <Place
-                  key={place.id}
-                  long={place.geometry.coordinates[0]}
-                  lat={place.geometry.coordinates[1]}
-                  name={place.text}
-                  locality={place.context[2].text}
-                  type={"destination-place"}
-                />
+                <TripList type={"Alternative"} key={route.number}>
+                  {route.segments.map((segment, index, array) => {
+                    return (
+                      <Trip
+                        instruction={segment.instruction}
+                        type={segment.type}
+                        key={index}
+                      />
+                    );
+                  })}
+                </TripList>
               );
             })}
-        </PlacesList>
+          {error && <Error message={error.errorMsg} />}
+        </div>
       </div>
-      <TripButton
-        separateRecommendedAndAlternativeRoute={
-          separateRecommendedAndAlternativeRoute
-        }
-        setError={setError}
-        setRecommendedRoute={setRecommendedRoute}
-        setAlternativeRoute={setAlternativeRoute}
-      />
-      <div className="bus-container">
-        {recommendedRoute &&
-          recommendedRoute.map((route) => {
-            return (
-              <TripList type={"Recommended"} key={route.number}>
-                {route.segments.map((segment, index, array) => {
-                  return (
-                    <Trip
-                      instruction={segment.instruction}
-                      type={segment.type}
-                      key={index}
-                    />
-                  );
-                })}
-              </TripList>
-            );
-          })}
-        {alternativeRoute &&
-          alternativeRoute.map((route) => {
-            return (
-              <TripList type={"Alternative"} key={route.number}>
-                {route.segments.map((segment, index, array) => {
-                  return (
-                    <Trip
-                      instruction={segment.instruction}
-                      type={segment.type}
-                      key={index}
-                    />
-                  );
-                })}
-              </TripList>
-            );
-          })}
-        {error && <Error message={error.errorMsg} />}
-      </div>
-    </div>
+    </>
   );
 }
 
