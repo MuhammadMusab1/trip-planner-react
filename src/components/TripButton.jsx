@@ -28,12 +28,16 @@ const TripButton = ({ separateRecommendedAndAlternativeRoute, setError }) => {
       destinationCoords.lat,
       destinationCoords.long
     )
-      .then((allAvailableTrips) =>
-        separateRecommendedAndAlternativeRoute(allAvailableTrips)
-      )
+      .then((allAvailableTrips) => {
+        separateRecommendedAndAlternativeRoute(allAvailableTrips);
+        setError(null);
+      })
       .catch((error) => {
-        console.log(error);
-        setError({ errorMsg: error });
+        if (typeof error === "object") {
+          setError({ errorMsg: "404 NOT FOUND" });
+        } else {
+          setError({ errorMsg: error });
+        }
       });
   };
   return (
