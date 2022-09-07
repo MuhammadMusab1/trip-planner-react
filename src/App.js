@@ -7,6 +7,7 @@ import PlacesList from "./components/PlacesList";
 import Place from "./components/Place";
 import TripButton from "./components/TripButton";
 import TripList from "./components/TripList";
+import Trip from "./components/Trip";
 
 function App() {
   const [originPlaces, setOriginPlaces] = useState(null);
@@ -140,8 +141,36 @@ function App() {
         }
       />
       <div className="bus-container">
-        <TripList type={"Recommended"} />
-        <TripList type={"Alternative"} />
+        {recommendedRoute &&
+          recommendedRoute.map((route) => {
+            return (
+              <TripList type={"Recommended"} key={route.number}>
+                {route.segments.map((segment) => {
+                  return (
+                    <Trip
+                      instruction={segment.instruction}
+                      type={segment.type}
+                    />
+                  );
+                })}
+              </TripList>
+            );
+          })}
+        {alternativeRoute &&
+          alternativeRoute.map((route) => {
+            return (
+              <TripList type={"Alternative"} key={route.number}>
+                {route.segments.map((segment) => {
+                  return (
+                    <Trip
+                      instruction={segment.instruction}
+                      type={segment.type}
+                    />
+                  );
+                })}
+              </TripList>
+            );
+          })}
       </div>
     </div>
   );

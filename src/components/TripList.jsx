@@ -1,12 +1,9 @@
-const TripList = ({ type }) => {
+const TripList = ({ type, children }) => {
   return (
     <div className={`${type.toLowerCase()}`}>
       <ul className="my-trip">
-        <h1>{type}</h1>
-        <li>
-          <i className="fas fa-walking" aria-hidden="true"></i>Walk for 3
-          minutes to stop #60073-Eastbound Dalhousie at Allegheny
-        </li>
+        <h2>{type}</h2>
+        {children}
       </ul>
     </div>
   );
