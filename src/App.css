@@ -94,3 +94,13 @@ svg {
   padding: 0;
   padding-top: 5px;
 }
+.error-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+}
+
+.error-div > div > svg {
+  color: red;
+}

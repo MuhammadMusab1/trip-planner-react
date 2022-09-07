@@ -1,5 +1,5 @@
 import { getAllTripsForRoute } from "../services/transitAPI";
-const TripButton = ({ separateRecommendedAndAlternativeRoute }) => {
+const TripButton = ({ separateRecommendedAndAlternativeRoute, setError }) => {
   const handlePlanTrip = () => {
     const tripPoints = {
       originCoords: {
@@ -27,9 +27,14 @@ const TripButton = ({ separateRecommendedAndAlternativeRoute }) => {
       originCoords.long,
       destinationCoords.lat,
       destinationCoords.long
-    ).then((allAvailableTrips) =>
-      separateRecommendedAndAlternativeRoute(allAvailableTrips)
-    );
+    )
+      .then((allAvailableTrips) =>
+        separateRecommendedAndAlternativeRoute(allAvailableTrips)
+      )
+      .catch((error) => {
+        console.log(error);
+        setError({ errorMsg: error });
+      });
   };
   return (
     <div className="button-container" onClick={handlePlanTrip}>

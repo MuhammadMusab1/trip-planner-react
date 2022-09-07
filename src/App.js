@@ -8,12 +8,16 @@ import Place from "./components/Place";
 import TripButton from "./components/TripButton";
 import TripList from "./components/TripList";
 import Trip from "./components/Trip";
+import Error from "./components/Error";
+
+//BiErrorAlt
 
 function App() {
   const [originPlaces, setOriginPlaces] = useState(null);
   const [destinationPlaces, setDestinationPlaces] = useState(null);
   const [recommendedRoute, setRecommendedRoute] = useState(null);
   const [alternativeRoute, setAlternativeRoute] = useState(null);
+  const [error, setError] = useState(null);
   const findTheFastestTrip = (tripsArray) => {
     if (tripsArray) {
       let lowestTimeTook = tripsArray[0].times.durations.total;
@@ -95,12 +99,13 @@ function App() {
     }
     return instruction;
   };
-  console.log(recommendedRoute);
-  console.log(alternativeRoute);
   return (
     <div className="grid-wrapper">
       <div className="origin-container">
-        <SearchInput setPlaces={setOriginPlaces} />
+        <SearchInput
+          setPlaces={setOriginPlaces}
+          placeholder={"Find a starting location"}
+        />
         <PlacesList type={"origin-list"}>
           {originPlaces &&
             originPlaces.map((place) => {
@@ -118,7 +123,10 @@ function App() {
         </PlacesList>
       </div>
       <div className="destination-container">
-        <SearchInput setPlaces={setDestinationPlaces} />
+        <SearchInput
+          setPlaces={setDestinationPlaces}
+          placeholder={"Choose your destination"}
+        />
         <PlacesList type={"destination-list"}>
           {destinationPlaces &&
             destinationPlaces.map((place) => {
@@ -139,6 +147,7 @@ function App() {
         separateRecommendedAndAlternativeRoute={
           separateRecommendedAndAlternativeRoute
         }
+        setError={setError}
       />
       <div className="bus-container">
         {recommendedRoute &&
@@ -171,6 +180,7 @@ function App() {
               </TripList>
             );
           })}
+        {error && <Error message={error.errorMsg} />}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getPlacesWithThisName } from "../services/mapboxAPI";
-const SearchInput = ({ setPlaces }) => {
+const SearchInput = ({ setPlaces, placeholder }) => {
   const [inputValue, setInputValue] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -11,7 +11,7 @@ const SearchInput = ({ setPlaces }) => {
   return (
     <form className="search-form" onSubmit={handleSubmit}>
       <input
-        placeholder="Find a starting location"
+        placeholder={placeholder}
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
