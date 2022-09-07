@@ -21,7 +21,7 @@ const Trip = ({ instruction, type }) => {
   };
   return (
     <li>
-      {chooseIconAccordingToType()}
+      <div> {chooseIconAccordingToType()}</div>
       {instruction}
     </li>
   );
