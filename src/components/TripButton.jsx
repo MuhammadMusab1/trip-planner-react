@@ -1,5 +1,10 @@
 import { getAllTripsForRoute } from "../services/transitAPI";
-const TripButton = ({ separateRecommendedAndAlternativeRoute, setError }) => {
+const TripButton = ({
+  separateRecommendedAndAlternativeRoute,
+  setError,
+  setRecommendedRoute,
+  setAlternativeRoute,
+}) => {
   const handlePlanTrip = () => {
     const tripPoints = {
       originCoords: {
@@ -34,7 +39,9 @@ const TripButton = ({ separateRecommendedAndAlternativeRoute, setError }) => {
       })
       .catch((error) => {
         if (typeof error === "object") {
-          setError({ errorMsg: "404 NOT FOUND" });
+          setAlternativeRoute(null);
+          setRecommendedRoute(null);
+          setError({ errorMsg: "404 NO TRIPS FOUND" });
         } else {
           setError({ errorMsg: error });
         }

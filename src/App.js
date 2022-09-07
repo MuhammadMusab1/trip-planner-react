@@ -148,17 +148,20 @@ function App() {
           separateRecommendedAndAlternativeRoute
         }
         setError={setError}
+        setRecommendedRoute={setRecommendedRoute}
+        setAlternativeRoute={setAlternativeRoute}
       />
       <div className="bus-container">
         {recommendedRoute &&
           recommendedRoute.map((route) => {
             return (
               <TripList type={"Recommended"} key={route.number}>
-                {route.segments.map((segment) => {
+                {route.segments.map((segment, index, array) => {
                   return (
                     <Trip
                       instruction={segment.instruction}
                       type={segment.type}
+                      key={index}
                     />
                   );
                 })}
@@ -169,11 +172,12 @@ function App() {
           alternativeRoute.map((route) => {
             return (
               <TripList type={"Alternative"} key={route.number}>
-                {route.segments.map((segment) => {
+                {route.segments.map((segment, index, array) => {
                   return (
                     <Trip
                       instruction={segment.instruction}
                       type={segment.type}
+                      key={index}
                     />
                   );
                 })}
