@@ -26,7 +26,6 @@ function App() {
           lowestTimeTook = trip.times.durations.total;
         }
       });
-      console.log(lowestTimeTook + " lowest time took");
       return lowestTimeTook;
     }
   };
@@ -101,11 +100,6 @@ function App() {
   };
   return (
     <>
-      {/* <Helmet>
-        <meta charSet="utf-8" />
-        <title>Trip Planner</title>
-        <link rel="canonical" href="http://mysite.com/example" />
-      </Helmet> */}
       <div className="grid-wrapper">
         <div className="origin-container">
           <SearchInput
