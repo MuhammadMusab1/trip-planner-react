@@ -9,7 +9,6 @@ import TripButton from "./components/TripButton";
 import TripList from "./components/TripList";
 import Trip from "./components/Trip";
 import Error from "./components/Error";
-import { Helmet } from "react-helmet";
 
 //BiErrorAlt
 
