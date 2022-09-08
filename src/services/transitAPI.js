@@ -1,3 +1,4 @@
+const API_KEY = process.env.REACT_APP_WINNIPEG_TRANSIT_API_KEY;
 export const getAllTripsForRoute = async (
   originLat,
   originLong,
@@ -18,7 +19,7 @@ export const getAllTripsForRoute = async (
   }
 
   const request = await fetch(
-    `https://api.winnipegtransit.com/v3/trip-planner.json?api-key=J5UJHy5yUpory_fpvpUv&origin=geo/${originLat},${originLong},&destination=geo/${destinationLat},${destinationLong},`
+    `https://api.winnipegtransit.com/v3/trip-planner.json?api-key=${API_KEY}&origin=geo/${originLat},${originLong},&destination=geo/${destinationLat},${destinationLong},`
   );
   const response = await request.json();
   const allAvailableTrips = response.plans;
